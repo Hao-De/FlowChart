@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Untitled Document</title>
+    <style>
+		body{
+			margin: 0;
+		}
+		canvas{
+			border: 0.5px solid black;
+		}
+	</style>
+	<script type="text/javascript" src="http://cdn.jsdelivr.net/fabric.js/2.0.0-beta.1/fabric.min.js"></script>
+</head>
+<body>
+	<canvas id="canvas_flow_chart">Your browser does not support CANVAS, please update to the latest version.</canvas>
+	<input type="button" value="test" id="testBtn">
+	
+	<script src="flowchart.js"></script>
+	<script>
+		(function(window){
+			'use strict';
+			
+			let chart = new FlowChart("canvas_flow_chart", {
+				gap: 50,
+				width:600,
+				height:400,
+//				width: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
+//				height: Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
+				hasGrid: true,
+//				bgColor: "#FBFAE1"
+			});
+			let chart1 = new FlowChart("canvas_flow_chart1", {
+				gap: 50,
+				width: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
+				height: Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
+				hasGrid: true,
+//				bgColor: "#FBFAE1"
+			});
+			// 長方形
+			let rect = FlowChart.rect({
+				x: 1,
+				y: 1,
+				width: 2,
+				height: 1,
+				isFill: false,
+				fillColor: "#000",
+				strokeColor: "red",
+				lineWidth: 3
+			});
+			let roundRect = FlowChart.rect({
+				x: 1,
+				y: 3,
+				width: 2,
+				height: 1,
+//				isFill: true,
+				fillColor: "red",
+				strokeColor: "black",
+				lineWidth: 3,
+				radius: 0.3 
+			});
+			let rhom = FlowChart.rhom({
+				x: 1,
+				y: 5,
+				width: 2,
+				height: 1,
+				isFill: false,
+				fillColor: "#000",
+				strokeColor: "red",
+				lineWidth: 3
+			});
+			let text = FlowChart.text({
+				text: "Test Font",
+				x: 7,
+				y: 1,
+				fontSize: 1,
+				Color: "green",
+				maxWidth: null,
+				alignX: "center",
+				alignY: "center"
+			});
+			let arrow = FlowChart.arrow({
+				lineWidth: 0.03,
+				arrowhead: true,
+				point: [ [3, 1.5], [4, 1.5], [4, 3.5], [3, 3.5] ],
+				color: "black"
+			});
+			
+			chart.add( rect, roundRect, rhom, text, arrow );
+			
+			document.getElementById("testBtn").addEventListener("click", function(){
+				rect.x = 2;
+				text.maxWidth = 2;
+				chart.update();
+			});
+			
+		})(window);
+	</script>
+</body>
+</html>
