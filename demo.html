@@ -11,7 +11,6 @@
 			border: 0.5px solid black;
 		}
 	</style>
-	<script type="text/javascript" src="http://cdn.jsdelivr.net/fabric.js/2.0.0-beta.1/fabric.min.js"></script>
 </head>
 <body>
 	<canvas id="canvas_flow_chart">Your browser does not support CANVAS, please update to the latest version.</canvas>
@@ -24,21 +23,21 @@
 			
 			let chart = new FlowChart("canvas_flow_chart", {
 				gap: 50,
-				width:600,
-				height:400,
-//				width: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
-//				height: Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
+				width: 600,
+				height: 400,
 				hasGrid: true,
 //				bgColor: "#FBFAE1"
 			});
-			let chart1 = new FlowChart("canvas_flow_chart1", {
-				gap: 50,
-				width: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
-				height: Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
-				hasGrid: true,
-//				bgColor: "#FBFAE1"
+			
+			let circle = FlowChart.circle({
+				x: 4,
+				y: 1,
+				radius: 0.1,
+				isFill: true,
+				fillColor: "blue",
+				strokeColor: "red",
+				lineWidth: 0.05
 			});
-			// 長方形
 			let rect = FlowChart.rect({
 				x: 1,
 				y: 1,
@@ -47,7 +46,7 @@
 				isFill: false,
 				fillColor: "#000",
 				strokeColor: "red",
-				lineWidth: 3
+				lineWidth: 0.02
 			});
 			let roundRect = FlowChart.rect({
 				x: 1,
@@ -73,7 +72,7 @@
 			let text = FlowChart.text({
 				text: "Test Font",
 				x: 7,
-				y: 1,
+				y: 4,
 				fontSize: 1,
 				Color: "green",
 				maxWidth: null,
@@ -81,18 +80,25 @@
 				alignY: "center"
 			});
 			let arrow = FlowChart.arrow({
-				lineWidth: 0.03,
+				lineWidth: 0.05,
 				arrowhead: true,
+				twoHead: true,
 				point: [ [3, 1.5], [4, 1.5], [4, 3.5], [3, 3.5] ],
-				color: "black"
+				color: "red",
+				headStyle: {
+					color: "green",
+				}
 			});
 			
-			chart.add( rect, roundRect, rhom, text, arrow );
+			chart.add( circle, rect, roundRect, rhom, text, arrow );
 			
 			document.getElementById("testBtn").addEventListener("click", function(){
-				rect.x = 2;
+				rect.y = 1.5;
+				arrow.point = [ [3, 2], [4, 2], [4, 3.5], [3, 3.5] ];
 				text.maxWidth = 2;
-				chart.update();
+				chart.update(); // 手動重繪畫布
+				
+				chart.remove( rhom ); // 移除菱形
 			});
 			
 		})(window);
